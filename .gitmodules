@@ -1,0 +1,3 @@
+[submodule "src/userplugins/vc-premid"]
+	path = src/userplugins/vc-premid
+	url = https://github.com/nyakowint/vc-premid.git

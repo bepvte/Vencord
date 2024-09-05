@@ -7,22 +7,30 @@
 import "./style.css";
 
 import { classNameFactory } from "@api/Styles";
-import { Button, ButtonLooks } from "@webpack/common";
+import { Button, ButtonLooks, GuildStore, useStateFromStores } from "@webpack/common";
+import { HiddenServersStore } from "../HiddenServersStore";
+import { openHiddenServersModal } from "./HiddenServersMenu";
 
 const cl = classNameFactory("vc-hideservers-");
 
-export default function ({ count, onClick, }: { count: number; onClick: () => void; }) {
+function HiddenServersButton() {
+    const hiddenGuilds = useStateFromStores([HiddenServersStore], () => HiddenServersStore.hiddenGuilds, undefined, (old, newer) => old.size === newer.size);
+    // if youve left a server dont show it in the count
+    const actuallyHidden = Array.from(hiddenGuilds).filter(x => GuildStore.getGuild(x)).length;
     return (
         <div className={cl("button-wrapper")}>
-            {count > 0 ? (
+            {actuallyHidden > 0 ? (
                 <Button
                     className={cl("button")}
                     look={ButtonLooks.BLANK}
                     size={Button.Sizes.MIN}
-                    onClick={onClick} >
-                    {count} Hidden
+                    onClick={() => openHiddenServersModal()}
+                >
+                    {actuallyHidden} Hidden
                 </Button>
             ) : null}
-        </div>
+        </div >
     );
 }
+
+export default () => { return <HiddenServersButton />; };

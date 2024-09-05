@@ -480,10 +480,6 @@ export const Devs = /* #__PURE__*/ Object.freeze({
         name: "byeoon",
         id: 1167275288036655133n
     },
-    bep: {
-        name: "bep",
-        id: 0n,
-    },
     Kaitlyn: {
         name: "kaitlyn",
         id: 306158896630988801n
@@ -790,6 +786,10 @@ export const EquicordDevs = Object.freeze({
     SpikeHD: {
         name: "SpikeHD",
         id: 221757857836564485n
+    },
+    bep: {
+        name: "bep",
+        id: 0n,
     }
 } satisfies Record<string, Dev>);
 

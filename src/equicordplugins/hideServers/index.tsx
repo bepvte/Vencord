@@ -15,14 +15,14 @@ import {
     removeServerListElement,
     ServerListRenderPosition,
 } from "@api/ServerList";
-import { Devs } from "@utils/constants";
+import { EquicordDevs } from "@utils/constants";
 import definePlugin from "@utils/types";
 import { Menu, React, useStateFromStores } from "@webpack/common";
 import { Guild } from "discord-types/general";
 
 import hiddenServersButton from "./components/HiddenServersButton";
-import settings from "./settings";
 import { HiddenServersStore } from "./HiddenServersStore";
+import settings from "./settings";
 
 type guildsNode = {
     type: "guild" | "folder";
@@ -64,7 +64,7 @@ export function removeIndicator() {
 export default definePlugin({
     name: "HideServers",
     description: "Allows you to hide servers from the guild list and quick switcher by right clicking them",
-    authors: [Devs.bep],
+    authors: [EquicordDevs.bep],
     tags: ["guild", "server", "hide"],
 
     dependencies: ["ServerListAPI"],
@@ -112,7 +112,7 @@ export default definePlugin({
 
     useFilteredGuilds(guilds: guildsNode[]): guildsNode[] {
         const hiddenGuilds = useStateFromStores([HiddenServersStore], () => HiddenServersStore.hiddenGuilds, undefined, (old, newer) => old.size === newer.size);
-        return guilds.flatMap((guild) => {
+        return guilds.flatMap(guild => {
             if (hiddenGuilds.has(guild.id.toString())) {
                 return [];
             }
@@ -127,7 +127,7 @@ export default definePlugin({
 
     filteredGuildResults(results: qsResult[]): qsResult[] {
         // not used in a component so no useStateFromStore
-        const hiddenGuilds = HiddenServersStore.hiddenGuilds;
+        const { hiddenGuilds } = HiddenServersStore;
         return results.filter(result => {
             if (result?.record?.guild_id && hiddenGuilds.has(result.record.guild_id)) {
                 return false;
